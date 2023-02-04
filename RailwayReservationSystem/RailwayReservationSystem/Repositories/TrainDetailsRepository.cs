@@ -24,6 +24,20 @@ namespace RailwayReservationSystem.Repositories
            
         }
 
+        public async Task<TrainDetails> DeleteTrainById(Guid id)
+        {
+            var deletetrain = await _obj.TrainInformation.FindAsync(id);
+            if(deletetrain==null)
+            {
+                return null;
+            }
+            _obj.TrainInformation.Remove(deletetrain);
+            await _obj.SaveChangesAsync();
+            return deletetrain;
+
+            
+        }
+
         public  async Task<IEnumerable<TrainDetails>> GetAllTrains()
         {
             return await _obj.TrainInformation.ToListAsync();
@@ -35,5 +49,7 @@ namespace RailwayReservationSystem.Repositories
             return await _obj.TrainInformation.FirstOrDefaultAsync(x=>x.DestinationStation==destination);
             
         }
+
+        
     }
 }

@@ -75,5 +75,20 @@ namespace RailwayReservationSystem.Controllers
             return Ok(traindto);
 
         }
+
+
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteTrain(Guid id )
+        {
+            var data = await obj.DeleteTrainById(id);
+            if(data==null)
+            {
+                return NotFound();
+
+            }
+            var traindto = mapper.Map<Models.DTO.TrainDetails>(data);
+            return Ok(traindto);
+        }
     }
 }

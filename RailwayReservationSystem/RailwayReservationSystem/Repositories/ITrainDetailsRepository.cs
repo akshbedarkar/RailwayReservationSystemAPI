@@ -17,7 +17,7 @@ namespace RailwayReservationSystem.Repositories
 
 
         //admin can delete the train details
-
+        Task<TrainDetails> DeleteTrainById(Guid id);
 
 
     }
