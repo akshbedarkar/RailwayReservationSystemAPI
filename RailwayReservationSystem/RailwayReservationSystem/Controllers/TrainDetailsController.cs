@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RailwayReservationSystem.Migrations;
 using RailwayReservationSystem.Models.Domain;
+using RailwayReservationSystem.Models.DTO;
 using RailwayReservationSystem.Repositories;
 
 namespace RailwayReservationSystem.Controllers
@@ -17,12 +19,46 @@ namespace RailwayReservationSystem.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllTrain()
+        [ActionName("GetAllTrain")]
+        public async Task <IActionResult> GetAllTrain()
         {
-            var traindetails = obj.GetAllTrains();
+            var traindetails = await obj.GetAllTrains();
             var traindto=mapper.Map<List<Models.DTO.TrainDetails>>(traindetails);
             return Ok(traindto);
 
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> CreateAddTrain(Addtrainrequest request )
+        //{
+        //    //request to domain model
+        //    var data = new Models.Domain.TrainDetails()
+        //    {
+        //        TrainName = request.TrainName,
+        //        SourceStation=request.SourceStation,
+        //        DestinationStation=request.DestinationStation,
+        //        SourceDateTime=request.SourceDateTime,
+        //        DestinationDateTime=request.DestinationDateTime,
+        //    };
+        //   data = await obj.AddTrain(data);
+
+
+        //    //pass data to repo
+
+        //    var traindto = new Models.DTO.TrainDetails()
+        //    {
+        //        TrainId=data.TrainId,
+        //        TrainName = data.TrainName,
+        //        SourceStation = data.SourceStation,
+        //        DestinationStation = data.DestinationStation,
+        //        SourceDateTime = data.SourceDateTime,
+        //        DestinationDateTime = data.DestinationDateTime,
+
+        //    };
+
+        //    return CreatedAtAction(nameof(GetAllTrain),new { id=traindto.TrainId},traindto);
+
+
+        //}
     }
 }

@@ -2,10 +2,8 @@
 
 namespace RailwayReservationSystem.Models.DTO
 {
-    public class TrainDetails
+    public class Addtrainrequest
     {
-        [Key]
-        public Guid TrainId { get; set; }
 
         [Required]
         public string TrainName { get; set; }
@@ -21,7 +19,5 @@ namespace RailwayReservationSystem.Models.DTO
 
         [Required]
         public DateTime DestinationDateTime { get; set; }
-
-
     }
 }
