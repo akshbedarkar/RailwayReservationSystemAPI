@@ -28,38 +28,38 @@ namespace RailwayReservationSystem.Controllers
 
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateAddTrain(Addtrainrequest request )
-        //{
-        //    //request to domain model
-        //    var data = new Models.Domain.TrainDetails()
-        //    {
-        //        TrainName = request.TrainName,
-        //        SourceStation=request.SourceStation,
-        //        DestinationStation=request.DestinationStation,
-        //        SourceDateTime=request.SourceDateTime,
-        //        DestinationDateTime=request.DestinationDateTime,
-        //    };
-        //   data = await obj.AddTrain(data);
+        [HttpPost]
+        public async Task<IActionResult> AddTrain(Addtrainrequest request)
+        {
+            //request to domain model
+            var data = new Models.Domain.TrainDetails()
+            {
+                TrainName = request.TrainName,
+                SourceStation = request.SourceStation,
+                DestinationStation = request.DestinationStation,
+                SourceDateTime = request.SourceDateTime,
+                DestinationDateTime = request.DestinationDateTime,
+            };
+            data = await obj.AddTrain(data);
 
 
-        //    //pass data to repo
+            //pass data to repo
 
-        //    var traindto = new Models.DTO.TrainDetails()
-        //    {
-        //        TrainId=data.TrainId,
-        //        TrainName = data.TrainName,
-        //        SourceStation = data.SourceStation,
-        //        DestinationStation = data.DestinationStation,
-        //        SourceDateTime = data.SourceDateTime,
-        //        DestinationDateTime = data.DestinationDateTime,
+            var traindto = new Models.DTO.TrainDetails()
+            {
+                TrainId = data.TrainId,
+                TrainName = data.TrainName,
+                SourceStation = data.SourceStation,
+                DestinationStation = data.DestinationStation,
+                SourceDateTime = data.SourceDateTime,
+                DestinationDateTime = data.DestinationDateTime,
 
-        //    };
+            };
 
-        //    return CreatedAtAction(nameof(GetAllTrain),new { id=traindto.TrainId},traindto);
+            return CreatedAtAction(nameof(GetAllTrain), new { id = traindto.TrainId }, traindto);
 
 
-        //}
+        }
 
 
         [HttpGet]

@@ -15,7 +15,14 @@ namespace RailwayReservationSystem.Repositories
             _obj = obj;
         }
 
-      
+        public async Task<TrainDetails> AddTrain(TrainDetails train)
+        {
+            train.TrainId = Guid.NewGuid();
+            await _obj.AddAsync(train);
+            await _obj.SaveChangesAsync();
+            return train;
+           
+        }
 
         public  async Task<IEnumerable<TrainDetails>> GetAllTrains()
         {
