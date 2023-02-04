@@ -7,6 +7,7 @@ namespace RailwayReservationSystem.Repositories
         //basic operations performed by admin
         Task<IEnumerable<TrainDetails>>  GetAllTrains();
 
+        Task <TrainDetails> GetTrainByDestination(string destination);
        
 
 

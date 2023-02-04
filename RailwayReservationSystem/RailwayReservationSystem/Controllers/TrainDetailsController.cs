@@ -60,5 +60,20 @@ namespace RailwayReservationSystem.Controllers
 
 
         //}
+
+
+        [HttpGet]
+        [Route("destination")]
+        public  async Task <IActionResult> GetTrainByDestination(string destination)
+        {
+           var data=  await obj.GetTrainByDestination(destination);
+            if(data==null)
+            {
+                return NotFound();
+            }
+           var traindto = mapper.Map<Models.DTO.TrainDetails>(data);
+            return Ok(traindto);
+
+        }
     }
 }

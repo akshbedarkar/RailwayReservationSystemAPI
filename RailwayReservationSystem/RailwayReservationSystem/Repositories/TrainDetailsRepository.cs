@@ -23,5 +23,10 @@ namespace RailwayReservationSystem.Repositories
 
         }
 
+        public  async Task<TrainDetails> GetTrainByDestination(string destination)
+        {
+            return await _obj.TrainInformation.FirstOrDefaultAsync(x=>x.DestinationStation==destination);
+            
+        }
     }
 }
