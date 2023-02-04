@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RailwayReservationSystem.Models.Domain
+namespace RailwayReservationSystem.Models.DTO
 {
     public class TrainDetails
     {
-
-        [Key]
         public Guid TrainId { get; set; }
 
         [Required]
@@ -22,5 +20,7 @@ namespace RailwayReservationSystem.Models.Domain
 
         [Required]
         public DateTime DestinationDateTime { get; set; }
+
+
     }
 }

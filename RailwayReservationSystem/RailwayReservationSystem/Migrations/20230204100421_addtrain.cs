@@ -15,8 +15,6 @@ namespace RailwayReservationSystem.Migrations
                 name: "TrainInformation",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     TrainId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TrainName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SourceStation = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -26,7 +24,7 @@ namespace RailwayReservationSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TrainInformation", x => x.Id);
+                    table.PrimaryKey("PK_TrainInformation", x => x.TrainId);
                 });
         }
 

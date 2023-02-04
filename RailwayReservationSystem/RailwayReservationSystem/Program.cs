@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationSystem.Data;
+using RailwayReservationSystem.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,12 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
 
     builder.Configuration.GetConnectionString("DatabaseConnection")
     ));
+
+builder.Services.AddScoped<ITrainDetailsRepository, TrainDetailsRepository>();
+
+
+//profile mapping 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 

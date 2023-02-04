@@ -12,7 +12,7 @@ using RailwayReservationSystem.Data;
 namespace RailwayReservationSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230204085640_addtrain")]
+    [Migration("20230204100421_addtrain")]
     partial class addtrain
     {
         /// <inheritdoc />
@@ -27,11 +27,9 @@ namespace RailwayReservationSystem.Migrations
 
             modelBuilder.Entity("RailwayReservationSystem.Models.Domain.TrainDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("TrainId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DestinationDateTime")
                         .HasColumnType("datetime2");
@@ -47,14 +45,11 @@ namespace RailwayReservationSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TrainId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("TrainName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TrainId");
 
                     b.ToTable("TrainInformation");
                 });
