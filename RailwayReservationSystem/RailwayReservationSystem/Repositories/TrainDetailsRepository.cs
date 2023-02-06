@@ -50,6 +50,23 @@ namespace RailwayReservationSystem.Repositories
             
         }
 
-        
+        public async Task<TrainDetails> UpdateTrain(Guid id,TrainDetails t)
+        {
+            var traindetails = await _obj.TrainInformation.FindAsync(id);
+            if (traindetails == null)
+            {
+                return null;
+            }
+
+            traindetails.TrainName = t.TrainName;
+            traindetails.SourceStation = t.SourceStation;
+            traindetails.DestinationStation = t.DestinationStation;
+            traindetails.SourceDateTime = t.SourceDateTime;
+            traindetails.DestinationDateTime = t.DestinationDateTime;
+
+            
+            await _obj.SaveChangesAsync();
+            return traindetails; 
+        }
     }
 }

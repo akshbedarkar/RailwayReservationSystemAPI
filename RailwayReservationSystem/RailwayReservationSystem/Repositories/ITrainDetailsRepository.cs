@@ -14,7 +14,7 @@ namespace RailwayReservationSystem.Repositories
         Task<TrainDetails> AddTrain(TrainDetails train);
 
         //admin can update the train details
-
+        Task<TrainDetails> UpdateTrain(Guid id,TrainDetails t);
 
         //admin can delete the train details
         Task<TrainDetails> DeleteTrainById(Guid id);

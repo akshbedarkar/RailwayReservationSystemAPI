@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using RailwayReservationSystem.Migrations;
 using RailwayReservationSystem.Models.Domain;
@@ -79,7 +80,7 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        public async Task<IActionResult> DeleteTrain(Guid id )
+        public async Task<IActionResult> DeleteTrain(Guid id)
         {
             var data = await obj.DeleteTrainById(id);
             if(data==null)
@@ -90,5 +91,46 @@ namespace RailwayReservationSystem.Controllers
             var traindto = mapper.Map<Models.DTO.TrainDetails>(data);
             return Ok(traindto);
         }
+
+
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateTrainById([FromRoute]Guid id,[FromBody] UpdateTrainRequest request)
+        {
+            
+            var data = new Models.Domain.TrainDetails()
+            {
+                TrainName = request.TrainName,
+                SourceStation = request.SourceStation,
+                DestinationStation = request.DestinationStation,
+                SourceDateTime = request.SourceDateTime,
+                DestinationDateTime = request.DestinationDateTime,
+            };
+
+            data = await obj.UpdateTrain(id, data);
+
+            if(data==null)
+            {
+                return NotFound();
+            }
+
+            var traindto = new Models.DTO.TrainDetails()
+            {
+                TrainId = data.TrainId,
+                TrainName = data.TrainName,
+                SourceStation = data.SourceStation,
+                DestinationStation = data.DestinationStation,
+                SourceDateTime = data.SourceDateTime,
+                DestinationDateTime = data.DestinationDateTime,
+
+            };
+
+            return Ok(traindto);
+
+
+        }
+
+
+
     }
 }
