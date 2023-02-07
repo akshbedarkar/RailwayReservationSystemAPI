@@ -17,6 +17,8 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
     ));
 
 builder.Services.AddScoped<ITrainDetailsRepository, TrainDetailsRepository>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+
 
 
 //profile mapping 

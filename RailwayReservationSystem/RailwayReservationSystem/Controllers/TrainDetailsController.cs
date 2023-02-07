@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
-using RailwayReservationSystem.Migrations;
 using RailwayReservationSystem.Models.Domain;
 using RailwayReservationSystem.Models.DTO;
 using RailwayReservationSystem.Repositories;
@@ -107,7 +106,7 @@ namespace RailwayReservationSystem.Controllers
                 DestinationDateTime = request.DestinationDateTime,
             };
 
-            data = await obj.UpdateTrain(id, data);
+            data = await obj.UpdateTrain( id, data);
 
             if(data==null)
             {
