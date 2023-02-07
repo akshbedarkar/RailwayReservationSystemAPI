@@ -16,6 +16,7 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DatabaseConnection")
     ));
 
+//dependency injection 
 builder.Services.AddScoped<ITrainDetailsRepository, TrainDetailsRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 
