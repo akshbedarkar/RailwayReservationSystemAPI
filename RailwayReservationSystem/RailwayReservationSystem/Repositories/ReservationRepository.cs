@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using RailwayReservationSystem.Data;
 using RailwayReservationSystem.Models.Domain;
 
@@ -12,6 +13,35 @@ namespace RailwayReservationSystem.Repositories
         {
             this.obj = obj;
         }
+
+        public async Task<Reservation> AddReservation(Reservation reserve)
+        {
+            //guid for reservation
+            reserve.ReservationId = Guid.NewGuid();
+            //add to database
+            await obj.Reservations.AddAsync(reserve);
+            await obj.SaveChangesAsync();
+            return reserve;
+           
+
+
+        }
+
+        public async Task<Reservation> CancelReservation(Guid id)
+        {
+            var data = await obj.Reservations.FindAsync(id);
+            if(data==null)
+            {
+                return null;
+            }
+
+            obj.Reservations.Remove(data);
+            await obj.SaveChangesAsync();
+            return data;
+
+            
+        }
+
         public async Task<IEnumerable<Reservation>> GetAllReservation()
         {
             var data = await obj.Reservations

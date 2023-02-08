@@ -13,6 +13,12 @@ namespace RailwayReservationSystem.Repositories
         //user can we reservation by reservation id 
         Task<Reservation> GetReservartionById(Guid id);
 
+        //user should be able to book ticket(single + 6 )
+        Task<Reservation> AddReservation(Reservation reserve);
+
+
+        Task<Reservation> CancelReservation(Guid id);
+
 
 
     }
