@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RailwayReservationSystem.Repositories;
 
@@ -6,6 +7,7 @@ namespace RailwayReservationSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class ReservationController : ControllerBase
     {
         private readonly IReservationRepository obj;
@@ -18,6 +20,8 @@ namespace RailwayReservationSystem.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Roles ="admin")]
+        //[Authorize(Roles = "user")]
         public async Task<IActionResult> GetAllReservations()
         {
             //fetch data from database-domain
@@ -34,6 +38,8 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "user")]
         public   async  Task<IActionResult> GetAllReservationById(Guid id )
         {
             //get data from domain
@@ -50,6 +56,7 @@ namespace RailwayReservationSystem.Controllers
 
 
         [HttpPost]
+        //[Authorize(Roles = "user")]
         public async Task<IActionResult> AddReservation([FromBody] Models.DTO.AddReservationRequest request)
         {
             //dto to domain
@@ -90,6 +97,7 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> CancelReservation(Guid id)
         {
             var data = await obj.CancelReservation(id);

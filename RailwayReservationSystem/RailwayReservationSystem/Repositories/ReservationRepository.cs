@@ -52,11 +52,12 @@ namespace RailwayReservationSystem.Repositories
             return data;
         }
 
+       
+
         public async Task<Reservation> GetReservartionById(Guid id)
         {
             var data = await obj.Reservations
                  .Include(x => x.User)
-                 .Include(x => x.quota)
                  .Include(x => x.TrainDetails)
                  .FirstOrDefaultAsync(x => x.ReservationId == id);
 

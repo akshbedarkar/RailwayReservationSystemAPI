@@ -10,6 +10,8 @@ namespace RailwayReservationSystem.Repositories
         //user can search by location
         Task <TrainDetails> GetTrainByDestination(string destination);
 
+        Task<TrainDetails> GetTrainById(Guid id);
+
         //admin can add the train details
         Task<TrainDetails> AddTrain(TrainDetails train);
 

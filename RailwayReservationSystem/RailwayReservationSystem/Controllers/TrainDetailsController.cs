@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using RailwayReservationSystem.Models.Domain;
 using RailwayReservationSystem.Models.DTO;
@@ -9,6 +11,7 @@ namespace RailwayReservationSystem.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    
     public class TrainDetailsController : Controller
     {
         private readonly ITrainDetailsRepository obj;
@@ -20,6 +23,7 @@ namespace RailwayReservationSystem.Controllers
         }
         [HttpGet]
         [ActionName("GetAllTrain")]
+       
         public async Task <IActionResult> GetAllTrain()
         {
             var traindetails = await obj.GetAllTrains();
@@ -29,6 +33,8 @@ namespace RailwayReservationSystem.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "admin")]
+        [EnableCors("_allowspecificorigin")]
         public async Task<IActionResult> AddTrain(Addtrainrequest request)
         {
             //request to domain model
@@ -64,6 +70,8 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpGet]
         [Route("destination")]
+
+
         public  async Task <IActionResult> GetTrainByDestination(string destination)
         {
            var data=  await obj.GetTrainByDestination(destination);
@@ -76,9 +84,26 @@ namespace RailwayReservationSystem.Controllers
 
         }
 
+        [HttpGet]
+        [Route("{id:guid}")]
+
+
+        public async Task<IActionResult> GetTrainById(Guid id)
+        {
+            var data = await obj.GetTrainById(id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            var traindto = mapper.Map<Models.DTO.TrainDetails>(data);
+            return Ok(traindto);
+
+        }
+
 
         [HttpDelete]
         [Route("{id:guid}")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteTrain(Guid id)
         {
             var data = await obj.DeleteTrainById(id);
@@ -92,8 +117,9 @@ namespace RailwayReservationSystem.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPatch]
         [Route("{id:guid}")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateTrainById([FromRoute]Guid id,[FromBody] UpdateTrainRequest request)
         {
             

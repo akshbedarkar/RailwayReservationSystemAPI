@@ -50,6 +50,11 @@ namespace RailwayReservationSystem.Repositories
             
         }
 
+        public async Task<TrainDetails> GetTrainById(Guid id)
+        {
+            return await _obj.TrainInformation.FirstOrDefaultAsync(x => x.TrainId == id);
+        }
+
         public async Task<TrainDetails> UpdateTrain(Guid id,TrainDetails t)
         {
             var traindetails = await _obj.TrainInformation.FindAsync(id);
