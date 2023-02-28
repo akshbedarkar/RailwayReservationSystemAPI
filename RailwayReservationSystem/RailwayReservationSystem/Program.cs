@@ -64,6 +64,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<ITrainDetailsRepository, TrainDetailsRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IQuotaRepository, QuotaRepository>();
 builder.Services.AddScoped<ITokenHandler,RailwayReservationSystem.Repositories.TokenHandler>();
 
 

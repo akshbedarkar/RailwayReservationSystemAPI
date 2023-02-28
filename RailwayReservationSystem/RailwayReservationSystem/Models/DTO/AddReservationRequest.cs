@@ -7,6 +7,8 @@ namespace RailwayReservationSystem.Models.DTO
        
         public string ReservationName { get; set; }
 
+        
+
 
         public string ReservationGender { get; set; }
 
@@ -21,10 +23,10 @@ namespace RailwayReservationSystem.Models.DTO
         public Guid UserId { get; set; }
        
       
-        public Guid QuotaId { get; set; }
+        public string Quota { get; set; }
       
    
-        public Guid TrainId { get; set; }
+        public string TrainName { get; set; }
       
     }
 }

@@ -11,7 +11,9 @@ namespace RailwayReservationSystem.Models.DTO
 
         public string ReservationName { get; set; }
 
-  
+        public string PNRNumber { get; set; }
+
+
         public string ReservationGender { get; set; }
 
     
@@ -27,13 +29,12 @@ namespace RailwayReservationSystem.Models.DTO
         public User User { get; set; }
 
 
-        [ForeignKey("Quota")]
-        public Guid QuotaId { get; set; }
-        public Quota quota { get; set; }
+       
+        public string Quota { get; set; }
 
-        [ForeignKey("TrainDetails")]
+      
 
-        public Guid TrainId { get; set; }
-        public TrainDetails TrainDetails { get; set; }
+        public string TrainName { get; set; }
+        
     }
 }

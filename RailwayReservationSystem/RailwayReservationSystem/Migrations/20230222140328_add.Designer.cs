@@ -12,7 +12,7 @@ using RailwayReservationSystem.Data;
 namespace RailwayReservationSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230207154511_add")]
+    [Migration("20230222140328_add")]
     partial class add
     {
         /// <inheritdoc />
@@ -49,8 +49,13 @@ namespace RailwayReservationSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("QuotaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PNRNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Quota")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReservationAddress")
                         .IsRequired()
@@ -67,17 +72,14 @@ namespace RailwayReservationSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TrainId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TrainName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ReservationId");
-
-                    b.HasIndex("QuotaId");
-
-                    b.HasIndex("TrainId");
 
                     b.HasIndex("UserId");
 
@@ -169,29 +171,13 @@ namespace RailwayReservationSystem.Migrations
 
             modelBuilder.Entity("RailwayReservationSystem.Models.Domain.Reservation", b =>
                 {
-                    b.HasOne("RailwayReservationSystem.Models.Domain.Quota", "quota")
-                        .WithMany()
-                        .HasForeignKey("QuotaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RailwayReservationSystem.Models.Domain.TrainDetails", "TrainDetails")
-                        .WithMany()
-                        .HasForeignKey("TrainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RailwayReservationSystem.Models.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TrainDetails");
-
                     b.Navigation("User");
-
-                    b.Navigation("quota");
                 });
 
             modelBuilder.Entity("RailwayReservationSystem.Models.Domain.Ticket", b =>

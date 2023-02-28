@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RailwayReservationSystem.Repositories;
 using System.Data;
+using System.Text;
 
 namespace RailwayReservationSystem.Controllers
 {
@@ -14,6 +15,7 @@ namespace RailwayReservationSystem.Controllers
         private readonly IUserRepository user;
         private readonly ITokenHandler token;
         private readonly IMapper map;
+       
 
         public AuthenticateController(IUserRepository user,ITokenHandler token,IMapper map)
         {
@@ -27,6 +29,8 @@ namespace RailwayReservationSystem.Controllers
         [Route("Login")]
         public async Task<IActionResult> LoginAsync(Models.DTO.LoginRequest request)
         {
+           
+           
             var data = await user.Authenticate(request.Email , request.Password,request.Role);
             if(data != null)
             {
@@ -40,6 +44,9 @@ namespace RailwayReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(Models.DTO.UserSignUpRequest request)
         {
+
+            
+
             var data = new Models.Domain.User
             {
                 FirstName = request.FirstName,
@@ -52,6 +59,8 @@ namespace RailwayReservationSystem.Controllers
 
 
             };
+           
+
             //domain to database
             data = await user.SignUp(data);
 
@@ -67,6 +76,7 @@ namespace RailwayReservationSystem.Controllers
                 Role=data.Role,
 
             };
+
 
 
             //pass data back 

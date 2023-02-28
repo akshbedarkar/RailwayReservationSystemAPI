@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RailwayReservationSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class data : Migration
+    public partial class addtables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,8 @@ namespace RailwayReservationSystem.Migrations
                 columns: table => new
                 {
                     QuotaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuotaName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    QuotaName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fare = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,24 +67,12 @@ namespace RailwayReservationSystem.Migrations
                     ReservationAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuotaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TrainId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Quota = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrainName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservations", x => x.ReservationId);
-                    table.ForeignKey(
-                        name: "FK_Reservations_Quotas_QuotaId",
-                        column: x => x.QuotaId,
-                        principalTable: "Quotas",
-                        principalColumn: "QuotaId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reservations_TrainInformation_TrainId",
-                        column: x => x.TrainId,
-                        principalTable: "TrainInformation",
-                        principalColumn: "TrainId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservations_Users_UserId",
                         column: x => x.UserId,
@@ -112,16 +101,6 @@ namespace RailwayReservationSystem.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_QuotaId",
-                table: "Reservations",
-                column: "QuotaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reservations_TrainId",
-                table: "Reservations",
-                column: "TrainId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reservations_UserId",
                 table: "Reservations",
                 column: "UserId");
@@ -136,16 +115,16 @@ namespace RailwayReservationSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Tickets");
-
-            migrationBuilder.DropTable(
-                name: "Reservations");
-
-            migrationBuilder.DropTable(
                 name: "Quotas");
 
             migrationBuilder.DropTable(
+                name: "Tickets");
+
+            migrationBuilder.DropTable(
                 name: "TrainInformation");
+
+            migrationBuilder.DropTable(
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "Users");

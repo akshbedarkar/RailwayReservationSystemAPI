@@ -8,6 +8,12 @@ namespace RailwayReservationSystem.Models.Domain
         [Key]
         public Guid ReservationId { get; set; }
 
+       
+
+        public string PNRNumber {get;set;}
+
+        
+
         [Required]
         public string ReservationName { get; set; }
 
@@ -27,15 +33,11 @@ namespace RailwayReservationSystem.Models.Domain
         public User User { get; set; }
       
 
-        [ForeignKey("Quota")]
-        public Guid QuotaId { get; set; }
-        public Quota quota { get; set; }         
+        public string Quota { get; set; }         
 
-        [ForeignKey("TrainDetails")]
 
-        public Guid TrainId { get; set; }
-        public TrainDetails TrainDetails { get; set; }
-
+        public string TrainName { get; set; }
+        
 
 
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RailwayReservationSystem.Data;
 using RailwayReservationSystem.Models.Domain;
+using System.Numerics;
 
 namespace RailwayReservationSystem.Repositories
 {
@@ -18,6 +19,16 @@ namespace RailwayReservationSystem.Repositories
         {
             //guid for reservation
             reserve.ReservationId = Guid.NewGuid();
+            reserve.ReservationId = Guid.NewGuid();
+            Guid guid = Guid.NewGuid();
+            BigInteger big = new BigInteger(guid.ToByteArray());
+            var bigstr = big.ToString();
+            var str = bigstr.Replace("-", string.Empty);
+            var pnr = str.ToString().Substring(0, 10);
+            
+            reserve.PNRNumber = pnr;
+            
+           
             //add to database
             await obj.Reservations.AddAsync(reserve);
             await obj.SaveChangesAsync();
@@ -27,43 +38,41 @@ namespace RailwayReservationSystem.Repositories
 
         }
 
-        public async Task<Reservation> CancelReservation(Guid id)
+        public async Task<Reservation> DeleteReservation(string number)
         {
-            var data = await obj.Reservations.FindAsync(id);
-            if(data==null)
+            //var deletereservation = await obj.Reservations.FindAsync(number);
+            var deletereservation = await obj.Reservations.FirstOrDefaultAsync(x => x.PNRNumber == number);
+            if (deletereservation  == null)
             {
                 return null;
             }
-
-            obj.Reservations.Remove(data);
+            obj.Reservations.Remove(deletereservation);
             await obj.SaveChangesAsync();
-            return data;
+            return deletereservation ;
 
-            
         }
 
         public async Task<IEnumerable<Reservation>> GetAllReservation()
         {
             var data = await obj.Reservations
                 .Include(x=>x.User)
-                .Include(x=>x.quota)
-                .Include(x=>x.TrainDetails)
                 .ToListAsync();
             return data;
         }
-
-       
-
         public async Task<Reservation> GetReservartionById(Guid id)
         {
             var data = await obj.Reservations
                  .Include(x => x.User)
-                 .Include(x => x.TrainDetails)
                  .FirstOrDefaultAsync(x => x.ReservationId == id);
 
             return data;
 
 
         }
+
+
+
+
+        
     }
 }

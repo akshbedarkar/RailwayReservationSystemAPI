@@ -54,6 +54,8 @@ namespace RailwayReservationSystem.Controllers
 
         }
 
+        
+
 
         [HttpPost]
         //[Authorize(Roles = "user")]
@@ -66,13 +68,16 @@ namespace RailwayReservationSystem.Controllers
                 ReservationGender = request.ReservationGender,
                 ReservationAddress = request.ReservationAddress,
                 ReservationDate = request.ReservationDate,
+                Quota=request.Quota,
                 UserId = request.UserId,
-                TrainId= request.TrainId,
-                QuotaId=request.QuotaId
+                TrainName = request.TrainName,
+               
 
 
 
             };
+
+               
             //domain to database
             data = await obj.AddReservation(data);
 
@@ -85,8 +90,8 @@ namespace RailwayReservationSystem.Controllers
                 ReservationDate=data.ReservationDate,
                 ReservationGender=data.ReservationGender,
                 UserId=data.UserId,
-                QuotaId=data.QuotaId,
-                TrainId=data.TrainId
+                Quota=data.Quota,
+                TrainName = data.TrainName
 
             };
 
@@ -95,28 +100,45 @@ namespace RailwayReservationSystem.Controllers
             return Ok(reservationdto);
         }
 
-        [HttpDelete]
-        [Route("{id:guid}")]
-        //[Authorize(Roles = "User")]
-        public async Task<IActionResult> CancelReservation(Guid id)
-        {
-            var data = await obj.CancelReservation(id);
+        //[HttpDelete]
+        //[Route("{PNRNumber:string}")]
+        ////[Authorize(Roles = "User")]
+        //public IActionResult CancelReservation(string PNRNumber)
+        //{
+        //    var data =  obj.CancelReservation(PNRNumber);
 
-            if(data==null)
+        //    if(data==null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //pass back to user 
+        //    var cancelreservationdto = map.Map<Models.DTO.Reservations>(data);
+        //    return Ok(cancelreservationdto);
+
+
+
+
+        //}
+
+        [HttpDelete]
+        [Route("number")]
+
+        //[Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteReservation(string number)
+        {
+            var data = await obj.DeleteReservation(number);
+            if (data == null)
             {
                 return NotFound();
+
             }
-            //pass back to user 
-            var cancelreservationdto = map.Map<Models.DTO.Reservations>(data);
-            return Ok(cancelreservationdto);
-
-
            
-
+            return Ok(data);
         }
 
 
-       
+
+
 
     }
 }
