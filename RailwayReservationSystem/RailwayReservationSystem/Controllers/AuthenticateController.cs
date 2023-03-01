@@ -8,6 +8,11 @@ using System.Text;
 
 namespace RailwayReservationSystem.Controllers
 {
+    //This Controller will be used for SignUp and Login .
+    //Token is genrated once the user signup credentials are verified
+    //and will be checked once the user is logged in to the system 
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthenticateController : ControllerBase
@@ -15,8 +20,9 @@ namespace RailwayReservationSystem.Controllers
         private readonly IUserRepository user;
         private readonly ITokenHandler token;
         private readonly IMapper map;
-       
 
+
+        #region SignUp and Login 
         public AuthenticateController(IUserRepository user,ITokenHandler token,IMapper map)
         {
             this.user = user;
@@ -29,7 +35,12 @@ namespace RailwayReservationSystem.Controllers
         [Route("Login")]
         public async Task<IActionResult> LoginAsync(Models.DTO.LoginRequest request)
         {
-           
+           //validation part
+
+
+
+
+            //logic 
            
             var data = await user.Authenticate(request.Email , request.Password,request.Role);
             if(data != null)
@@ -103,6 +114,8 @@ namespace RailwayReservationSystem.Controllers
 
 
         }
+
+        #endregion
 
 
 

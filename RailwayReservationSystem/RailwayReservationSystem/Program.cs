@@ -5,14 +5,17 @@ using RailwayReservationSystem.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//Jwt Authentication
 builder.Services.AddSwaggerGen(options =>
 {
     var securityScheme = new OpenApiSecurityScheme
@@ -30,6 +33,9 @@ builder.Services.AddSwaggerGen(options =>
         }
     };
 
+
+   
+
     options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -40,13 +46,13 @@ builder.Services.AddSwaggerGen(options =>
 
 
 
-//injected dbcontext class in the servcies collection
+//Database Connectivity
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
 
     builder.Configuration.GetConnectionString("DatabaseConnection")
     ));
 
-//enable cors policy 
+//Enable Cors Policy
 var Allowspecificorigins = "_allowspecificorigin";
 
 builder.Services.AddCors(options =>
@@ -62,11 +68,11 @@ builder.Services.AddCors(options =>
 });
 
 
+//Fluent Validation
+builder.Services.AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<Program>());
 
 
-
-
-//dependency injection 
+//Regsiter Services 
 builder.Services.AddScoped<ITrainDetailsRepository, TrainDetailsRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -75,10 +81,10 @@ builder.Services.AddScoped<ITokenHandler,RailwayReservationSystem.Repositories.T
 
 
 
-//profile mapping 
+//Profile Mapping 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-//injectiong jwt 
+//Injecting JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 
 options.TokenValidationParameters=new TokenValidationParameters
@@ -97,7 +103,7 @@ var app = builder.Build();
 
 
 
-// Configure the HTTP request pipeline.
+//Configure HTTP Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

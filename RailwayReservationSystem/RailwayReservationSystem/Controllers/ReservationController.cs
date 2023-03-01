@@ -11,6 +11,13 @@ namespace RailwayReservationSystem.Controllers
     
     public class ReservationController : ControllerBase
     {
+        /* The reservation controller will make the reservation 
+         * Delete reservations based on the PNR number  and  
+         * Show all the reservations */
+
+
+        #region Reservation 
+
         private readonly IReservationRepository obj;
         private readonly IMapper map;
 
@@ -119,7 +126,7 @@ namespace RailwayReservationSystem.Controllers
 
 
 
-
+        #endregion 
 
     }
 }
