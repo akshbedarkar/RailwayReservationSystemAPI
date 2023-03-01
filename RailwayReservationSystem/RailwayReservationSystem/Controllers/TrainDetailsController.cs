@@ -33,7 +33,6 @@ namespace RailwayReservationSystem.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "admin")]
         [EnableCors("_allowspecificorigin")]
         public async Task<IActionResult> AddTrain(Addtrainrequest request)
         {
@@ -103,7 +102,7 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        //[Authorize(Roles = "admin")]
+      
         public async Task<IActionResult> DeleteTrain(Guid id)
         {
             var data = await obj.DeleteTrainById(id);
@@ -119,7 +118,7 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpPatch]
         [Route("{id:guid}")]
-        //[Authorize(Roles = "admin")]
+      
         public async Task<IActionResult> UpdateTrainById([FromRoute]Guid id,[FromBody] UpdateTrainRequest request)
         {
             

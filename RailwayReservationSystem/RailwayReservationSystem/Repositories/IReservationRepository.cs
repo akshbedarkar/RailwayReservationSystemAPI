@@ -18,7 +18,6 @@ namespace RailwayReservationSystem.Repositories
 
 
 
-        //user should be able to book ticket(single + 6 )
         Task<Reservation> AddReservation(Reservation reserve);
 
 

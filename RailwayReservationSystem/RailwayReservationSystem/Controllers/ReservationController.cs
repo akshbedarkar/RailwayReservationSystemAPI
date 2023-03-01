@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using RailwayReservationSystem.Repositories;
 
@@ -20,8 +21,7 @@ namespace RailwayReservationSystem.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles ="admin")]
-        //[Authorize(Roles = "user")]
+        
         public async Task<IActionResult> GetAllReservations()
         {
             //fetch data from database-domain
@@ -38,8 +38,7 @@ namespace RailwayReservationSystem.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
-        //[Authorize(Roles = "admin")]
-        //[Authorize(Roles = "user")]
+       
         public   async  Task<IActionResult> GetAllReservationById(Guid id )
         {
             //get data from domain
@@ -58,7 +57,7 @@ namespace RailwayReservationSystem.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "user")]
+        [EnableCors("_allowspecificorigin")]
         public async Task<IActionResult> AddReservation([FromBody] Models.DTO.AddReservationRequest request)
         {
             //dto to domain
@@ -100,30 +99,12 @@ namespace RailwayReservationSystem.Controllers
             return Ok(reservationdto);
         }
 
-        //[HttpDelete]
-        //[Route("{PNRNumber:string}")]
-        ////[Authorize(Roles = "User")]
-        //public IActionResult CancelReservation(string PNRNumber)
-        //{
-        //    var data =  obj.CancelReservation(PNRNumber);
-
-        //    if(data==null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //pass back to user 
-        //    var cancelreservationdto = map.Map<Models.DTO.Reservations>(data);
-        //    return Ok(cancelreservationdto);
-
-
-
-
-        //}
+        
 
         [HttpDelete]
         [Route("number")]
 
-        //[Authorize(Roles = "admin")]
+        [EnableCors("_allowspecificorigin")]
         public async Task<IActionResult> DeleteReservation(string number)
         {
             var data = await obj.DeleteReservation(number);

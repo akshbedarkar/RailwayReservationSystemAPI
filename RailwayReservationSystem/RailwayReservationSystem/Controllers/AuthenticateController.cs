@@ -88,6 +88,7 @@ namespace RailwayReservationSystem.Controllers
 
 
         [HttpGet]
+       
         
         public async Task<IActionResult> GetAllUser()
         {

@@ -11,9 +11,6 @@ namespace RailwayReservationSystem.Profiles
 
             CreateMap<Models.Domain.User, Models.DTO.User>().ReverseMap();
 
-
-
-
             CreateMap<Models.Domain.TrainDetails, Models.DTO.TrainDetails>().ReverseMap();
         }
     }

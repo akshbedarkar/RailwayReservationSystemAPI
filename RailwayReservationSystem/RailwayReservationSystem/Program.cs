@@ -60,6 +60,12 @@ builder.Services.AddCors(options =>
         });
 
 });
+
+
+
+
+
+
 //dependency injection 
 builder.Services.AddScoped<ITrainDetailsRepository, TrainDetailsRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
@@ -89,6 +95,8 @@ options.TokenValidationParameters=new TokenValidationParameters
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -97,13 +105,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-//cors policy
 app.UseCors(Allowspecificorigins);
 
 app.Run();
