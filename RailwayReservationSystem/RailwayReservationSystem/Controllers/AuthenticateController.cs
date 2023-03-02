@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using MimeKit.Text;
 using RailwayReservationSystem.Repositories;
-using System.Data;
-using System.Text;
+
 
 namespace RailwayReservationSystem.Controllers
 {
@@ -55,8 +56,12 @@ namespace RailwayReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(Models.DTO.UserSignUpRequest request)
         {
-
+            //Session for Email and FirstName
+            //HttpContext.Session.SetString("Email", request.Email);
+            //HttpContext.Session.SetString("FirstName", request.FirstName);
             
+
+
 
             var data = new Models.Domain.User
             {
@@ -75,6 +80,9 @@ namespace RailwayReservationSystem.Controllers
             //domain to database
             data = await user.SignUp(data);
 
+           
+         
+
             //domain to dto
             var userdto = new Models.DTO.User
             {
@@ -88,6 +96,30 @@ namespace RailwayReservationSystem.Controllers
 
             };
 
+
+
+
+
+
+
+            //Email Notification to user after successfully signup
+
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse("jasper.frami@ethereal.email"));
+            email.To.Add(MailboxAddress.Parse(userdto.Email));
+            email.Subject = "Welcome to Railway Reservation System !";
+            email.Body = new TextPart(TextFormat.Html)
+            {
+                Text = "Hi " + userdto.FirstName + "\n" + "" +
+                "Below are the credentials you used to signed up in the system :" + "\n" + "" +
+                   "UserId : " + userdto.UserId + "\n" + "" + "Password : " + userdto.Password + "\n" + "\n" + "Have a Safe Journey !"
+            };
+
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.ethereal.email", 587, MailKit.Security.SecureSocketOptions.StartTls); //try with gmail as well
+            smtp.Authenticate("jasper.frami@ethereal.email", "Bve3XeCyncFyYU61GM");
+            smtp.Send(email);
+            smtp.Disconnect(true);
 
 
             //pass data back 

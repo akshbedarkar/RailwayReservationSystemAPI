@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using FluentValidation.AspNetCore;
+using RailwayReservationSystem.Models.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 
 //Jwt Authentication
 builder.Services.AddSwaggerGen(options =>
@@ -42,6 +44,17 @@ builder.Services.AddSwaggerGen(options =>
         { securityScheme,new string[] { } }
     });
 
+    
+
+});
+
+//Session 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
+
 });
 
 
@@ -54,6 +67,9 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
 
 //Enable Cors Policy
 var Allowspecificorigins = "_allowspecificorigin";
+
+
+
 
 builder.Services.AddCors(options =>
 {
@@ -80,7 +96,6 @@ builder.Services.AddScoped<IQuotaRepository, QuotaRepository>();
 builder.Services.AddScoped<ITokenHandler,RailwayReservationSystem.Repositories.TokenHandler>();
 
 
-
 //Profile Mapping 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
@@ -102,7 +117,6 @@ options.TokenValidationParameters=new TokenValidationParameters
 var app = builder.Build();
 
 
-
 //Configure HTTP Pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -117,8 +131,16 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+
+app.UseSession();
+
 app.MapControllers();
 
+app.UseRouting();
+
+
 app.UseCors(Allowspecificorigins);
+
+
 
 app.Run();

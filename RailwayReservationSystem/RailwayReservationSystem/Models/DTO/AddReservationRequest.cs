@@ -7,7 +7,6 @@ namespace RailwayReservationSystem.Models.DTO
        
         public string ReservationName { get; set; }
 
-        
 
 
         public string ReservationGender { get; set; }

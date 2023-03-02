@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit.Text;
+using MimeKit;
 using RailwayReservationSystem.Repositories;
+using Microsoft.AspNetCore.Http;
+using MailKit.Net.Smtp;
 
 namespace RailwayReservationSystem.Controllers
 {
@@ -97,13 +101,16 @@ namespace RailwayReservationSystem.Controllers
                 ReservationGender=data.ReservationGender,
                 UserId=data.UserId,
                 Quota=data.Quota,
-                TrainName = data.TrainName
+                TrainName = data.TrainName,
+                PNRNumber =data.PNRNumber
 
-            };
 
-
+    };
+            
             //pass data back 
             return Ok(reservationdto);
+           
+         
         }
 
         
